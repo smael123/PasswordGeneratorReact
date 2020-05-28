@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import generatePassword from "./services/PasswordGeneratorService";
+
 export default class App extends Component {
 
     constructor(props) {
@@ -13,6 +15,7 @@ export default class App extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleGeneratePassword = this.handleGeneratePassword.bind(this);
     }
 
     handleInputChange(event) {
@@ -22,32 +25,67 @@ export default class App extends Component {
         this.setState({
           [name]: value    
         });
-      }
+    }
+
+    handleGeneratePassword(event) {
+        event.preventDefault();
+
+        const { 
+            passwordLength, 
+            includeSpecialCharacters, 
+            includeNumbers 
+        } = this.state;
+
+        this.setState({ 
+            generatedPassword: generatePassword(passwordLength, includeSpecialCharacters, includeNumbers) 
+        });
+    }
 
     render() {
+        const { 
+            passwordLength, 
+            includeSpecialCharacters, 
+            includeNumbers,
+            generatedPassword 
+        } = this.state;
+
         return (
             <div>
                 <h1>Password Generator</h1>
 
                 <div style={{borderWidth:"1px",borderColor:"black",borderStyle:"solid"}}>
-                    <span>{this.state.generatedPassword}</span>
+                    <span>{generatedPassword}</span>
                 </div>
 
                 <div>
-                    <button>Generate</button>
+                    <button onClick={this.handleGeneratePassword}>
+                        Generate
+                    </button>
                     <button>Copy to Clipboard</button>
                 </div>
 
                 <div>
                     <label>Length</label>
-                    <input name="passwordLength" type="number" value={this.state.passwordLength} onChange={this.handleInputChange} />
+                    <input 
+                        name="passwordLength" 
+                        type="number" 
+                        value={passwordLength} 
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <input name="includeSpecialCharacters" type="checkbox" checked={this.state.includeSpecialCharacters} onChange={this.handleInputChange} />
+                    <input 
+                        name="includeSpecialCharacters" 
+                        type="checkbox" 
+                        checked={includeSpecialCharacters} 
+                        onChange={this.handleInputChange} />
                     <label>Include Special Characters</label>
                 </div>
                 <div>
-                    <input name="includeNumbers" type="checkbox" checked={this.state.includeNumbers} onChange={this.handleInputChange} />
+                    <input 
+                        name="includeNumbers" 
+                        type="checkbox" 
+                        checked={includeNumbers} 
+                        onChange={this.handleInputChange} />
                     <label>Include Numbers</label>
                 </div>
             </div>
