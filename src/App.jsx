@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import generatePassword from "./services/PasswordGeneratorService";
+import PasswordGenerator from './components/PasswordGenerator';
 
 export default class App extends Component {
 
@@ -19,6 +20,8 @@ export default class App extends Component {
     }
 
     handleInputChange(event) {
+        //console.log('fired');
+
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
@@ -50,45 +53,13 @@ export default class App extends Component {
         } = this.state;
 
         return (
-            <div>
-                <h1>Password Generator</h1>
-
-                <div style={{borderWidth:"1px",borderColor:"black",borderStyle:"solid"}}>
-                    <span>{generatedPassword}</span>
-                </div>
-
-                <div>
-                    <button onClick={this.handleGeneratePassword}>
-                        Generate
-                    </button>
-                    <button>Copy to Clipboard</button>
-                </div>
-
-                <div>
-                    <label>Length</label>
-                    <input 
-                        name="passwordLength" 
-                        type="number" 
-                        value={passwordLength} 
-                        onChange={this.handleInputChange} />
-                </div>
-                <div>
-                    <input 
-                        name="includeSpecialCharacters" 
-                        type="checkbox" 
-                        checked={includeSpecialCharacters} 
-                        onChange={this.handleInputChange} />
-                    <label>Include Special Characters</label>
-                </div>
-                <div>
-                    <input 
-                        name="includeNumbers" 
-                        type="checkbox" 
-                        checked={includeNumbers} 
-                        onChange={this.handleInputChange} />
-                    <label>Include Numbers</label>
-                </div>
-            </div>
+            <PasswordGenerator 
+                passwordLength={passwordLength} 
+                includeSpecialCharacters={includeSpecialCharacters}
+                includeNumbers={includeNumbers}
+                generatedPassword={generatedPassword}
+                onGeneratePasswordClick={this.handleGeneratePassword}
+                onInputChange={this.handleInputChange} />
         )
     }
 }

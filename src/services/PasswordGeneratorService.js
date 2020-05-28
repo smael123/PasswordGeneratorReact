@@ -1,17 +1,19 @@
 export default function generatePassword(passwordLength, includeSpecialCharacters, includeNumbers) {
-    let applicableIndices = [...Array(25).keys()].map(c => String.fromCharCode(c + 65))
-        .concat([...Array(25).keys()].map(c => String.fromCharCode(c + 97)));
+    let applicableIndices = [...Array(26).keys()].map(c => String.fromCharCode(c + 65))
+        .concat([...Array(26).keys()].map(c => String.fromCharCode(c + 97)));
 
     if (includeNumbers) {
-       applicableIndices = applicableIndices.concat([...Array(9).keys()].map(c => String.fromCharCode(c + 48)));
+       applicableIndices = applicableIndices.concat([...Array(10).keys()].map(c => String.fromCharCode(c + 48)));
     }
 
     if (includeSpecialCharacters) {
-        applicableIndices = applicableIndices.concat([...Array(14).keys()].map(c => String.fromCharCode(c + 33)));
-        applicableIndices = applicableIndices.concat([...Array(6).keys()].map(c => String.fromCharCode(c + 58)));
-        applicableIndices = applicableIndices.concat([...Array(5).keys()].map(c => String.fromCharCode(c + 91)));
-        applicableIndices = applicableIndices.concat([...Array(3).keys()].map(c => String.fromCharCode(c + 123)));
+        applicableIndices = applicableIndices.concat([...Array(15).keys()].map(c => String.fromCharCode(c + 33)));
+        applicableIndices = applicableIndices.concat([...Array(7).keys()].map(c => String.fromCharCode(c + 58)));
+        applicableIndices = applicableIndices.concat([...Array(6).keys()].map(c => String.fromCharCode(c + 91)));
+        applicableIndices = applicableIndices.concat([...Array(4).keys()].map(c => String.fromCharCode(c + 123)));
     }
+
+    //console.log(applicableIndices);
 
     const maxRandomValue = applicableIndices.length;
 
