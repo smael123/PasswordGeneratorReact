@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
-import generatePassword from "./services/PasswordGeneratorService";
-import PasswordGenerator from './components/PasswordGenerator';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/App.css'
+
+import generatePassword from "../services/PasswordGeneratorService";
+import PasswordGenerator from '../components/PasswordGenerator';
 
 export default class App extends Component {
 

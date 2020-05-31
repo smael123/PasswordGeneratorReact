@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {Button, Form, ButtonGroup } from "react-bootstrap";
 
-export default class PasswordGenerator extends Component {
+const PasswordGenerator = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
         const { 
             passwordLength, 
             includeSpecialCharacters, 
@@ -14,48 +10,51 @@ export default class PasswordGenerator extends Component {
             generatedPassword,
             onInputChange,
             onGeneratePasswordClick
-        } = this.props;
+        } = props;
 
         return (
-            <div>
+            <React.Fragment>
                 <h1>Password Generator</h1>
 
-                <div style={{borderWidth:"1px",borderColor:"black",borderStyle:"solid"}}>
-                    <span>{generatedPassword}</span>
-                </div>
+                <Form.Control type="text" disabled={true} value={generatedPassword} />
 
-                <div>
-                    <button onClick={onGeneratePasswordClick}>
-                        Generate
-                    </button>
-                    <button>Copy to Clipboard</button>
-                </div>
-
-                <div>
-                    <label>Length</label>
-                    <input 
-                        name="passwordLength" 
-                        type="number" 
-                        value={passwordLength} 
-                        onChange={onInputChange} />
-                </div>
-                <div>
-                    <input 
-                        name="includeSpecialCharacters" 
-                        type="checkbox" 
-                        checked={includeSpecialCharacters} 
-                        onChange={onInputChange} />
-                    <label>Include Special Characters</label>
-                </div>
-                <div>
-                    <input 
-                        name="includeNumbers" 
-                        type="checkbox" 
-                        checked={includeNumbers} 
-                        onChange={onInputChange} />
-                    <label>Include Numbers</label>
-                </div>
-            </div>
+                <Form className='generator-form'>
+                    <ButtonGroup>
+                        <Button variant='primary' onClick={onGeneratePasswordClick}>
+                            Generate
+                        </Button>
+                        <Button variant='primary'>
+                            Copy to Clipboard
+                        </Button>
+                    </ButtonGroup>
+                    
+                    <Form.Group>
+                        <Form.Label>Length</Form.Label>
+                        <Form.Control 
+                            name="passwordLength" 
+                            type="number" 
+                            value={passwordLength} 
+                            onChange={onInputChange} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Check 
+                                name="includeSpecialCharacters" 
+                                type="checkbox" 
+                                checked={includeSpecialCharacters} 
+                                onChange={onInputChange}
+                                label="Include Special Characters" />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Check 
+                                name="includeNumbers" 
+                                type="checkbox" 
+                                checked={includeNumbers} 
+                                onChange={onInputChange}
+                                label="Include Numbers" />
+                        </Form.Group>
+                </Form>
+            </React.Fragment>
         )
-    }
 }
+
+export default PasswordGenerator;
