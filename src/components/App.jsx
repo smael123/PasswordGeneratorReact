@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Toast } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/App.css'
@@ -13,13 +14,18 @@ export default class App extends Component {
 
         this.state = {
             generatedPassword: '',
-            passwordLength: 0,
+            passwordLength: 8,
             includeSpecialCharacters: true,
-            includeNumbers: true
+            includeNumbers: true,
+            toastHeaderText: 'Test',
+            toastBodyText: 'Test',
+            toastVisible: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleGeneratePassword = this.handleGeneratePassword.bind(this);
+        this.toggleToastVisibility = this.toggleToastVisibility.bind(this);
+        this.handleClipboard = this.handleClipboard.bind(this);
     }
 
     handleInputChange(event) {
@@ -49,7 +55,19 @@ export default class App extends Component {
         // passwordDom.select();
         // document.execCommand("copy");
 
-        navigator.clipboard.writeText(text)
+        navigator.clipboard.writeText(text);
+
+        this.setState({
+            toastHeaderText: 'Success',
+            toastBodyText: 'Copied to clipboard.',
+            toastVisible: true
+        });
+    }
+
+    toggleToastVisibility() {
+        this.setState({
+            toastVisible: !this.state.toastVisible
+        })
     }
 
     render() {
@@ -57,18 +75,37 @@ export default class App extends Component {
             passwordLength, 
             includeSpecialCharacters, 
             includeNumbers,
-            generatedPassword 
+            generatedPassword,
+            toastHeaderText,
+            toastBodyText,
+            toastVisible
         } = this.state;
 
         return (
-            <PasswordGenerator 
-                passwordLength={passwordLength} 
-                includeSpecialCharacters={includeSpecialCharacters}
-                includeNumbers={includeNumbers}
-                generatedPassword={generatedPassword}
-                onGeneratePasswordClick={this.handleGeneratePassword}
-                onInputChange={this.handleInputChange}
-                onClipboardClick={this.handleClipboard} />
+            <div>
+                <div className='toast-container'>
+                    <Toast 
+                        style={{display : toastVisible ? 'block' : 'none' }}
+                        show={toastVisible}
+                        onClose={this.toggleToastVisibility}>
+                        <Toast.Header>
+                            <strong className="mr-auto">{toastHeaderText}</strong>
+                        </Toast.Header>
+                        <Toast.Body>{toastBodyText}</Toast.Body>
+                    </Toast>
+                </div>
+                <div className='container'>
+                    <PasswordGenerator 
+                    passwordLength={passwordLength} 
+                    includeSpecialCharacters={includeSpecialCharacters}
+                    includeNumbers={includeNumbers}
+                    generatedPassword={generatedPassword}
+                    onGeneratePasswordClick={this.handleGeneratePassword}
+                    onInputChange={this.handleInputChange}
+                    onClipboardClick={this.handleClipboard} />
+                </div>
+            </div>
+            
         )
     }
 }

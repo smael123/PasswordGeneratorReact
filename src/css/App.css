@@ -5,3 +5,10 @@ input {
 .generator-form {
     margin: 10px auto;
 }
+
+.toast-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 200px;
+}
