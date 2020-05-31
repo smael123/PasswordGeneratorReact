@@ -2,14 +2,14 @@ import React from 'react';
 import {Button, Form, ButtonGroup } from "react-bootstrap";
 
 const PasswordGenerator = (props) => {
-
         const { 
             passwordLength, 
             includeSpecialCharacters, 
             includeNumbers,
             generatedPassword,
             onInputChange,
-            onGeneratePasswordClick
+            onGeneratePasswordClick,
+            onClipboardClick
         } = props;
 
         return (
@@ -23,7 +23,9 @@ const PasswordGenerator = (props) => {
                         <Button variant='primary' onClick={onGeneratePasswordClick}>
                             Generate
                         </Button>
-                        <Button variant='primary'>
+                        <Button 
+                            variant='primary' 
+                            onClick={() => onClipboardClick(generatedPassword)}>
                             Copy to Clipboard
                         </Button>
                     </ButtonGroup>

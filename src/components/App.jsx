@@ -23,8 +23,6 @@ export default class App extends Component {
     }
 
     handleInputChange(event) {
-        //console.log('fired');
-
         const target = event.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
@@ -33,9 +31,7 @@ export default class App extends Component {
         });
     }
 
-    handleGeneratePassword(event) {
-        event.preventDefault();
-
+    handleGeneratePassword() {
         const { 
             passwordLength, 
             includeSpecialCharacters, 
@@ -45,6 +41,15 @@ export default class App extends Component {
         this.setState({ 
             generatedPassword: generatePassword(passwordLength, includeSpecialCharacters, includeNumbers) 
         });
+    }
+
+    handleClipboard(text) {
+        // console.log(passwordDom);
+
+        // passwordDom.select();
+        // document.execCommand("copy");
+
+        navigator.clipboard.writeText(text)
     }
 
     render() {
@@ -62,7 +67,8 @@ export default class App extends Component {
                 includeNumbers={includeNumbers}
                 generatedPassword={generatedPassword}
                 onGeneratePasswordClick={this.handleGeneratePassword}
-                onInputChange={this.handleInputChange} />
+                onInputChange={this.handleInputChange}
+                onClipboardClick={this.handleClipboard} />
         )
     }
 }
