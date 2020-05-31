@@ -20,7 +20,7 @@ export default class App extends Component {
             toastHeaderText: 'Test',
             toastBodyText: 'Test',
             toastVisible: false
-        }
+        };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleGeneratePassword = this.handleGeneratePassword.bind(this);
@@ -49,13 +49,8 @@ export default class App extends Component {
         });
     }
 
-    handleClipboard(text) {
-        // console.log(passwordDom);
-
-        // passwordDom.select();
-        // document.execCommand("copy");
-
-        navigator.clipboard.writeText(text);
+    handleClipboard() {
+        navigator.clipboard.writeText(this.state.generatedPassword);
 
         this.setState({
             toastHeaderText: 'Success',
@@ -67,7 +62,7 @@ export default class App extends Component {
     toggleToastVisibility() {
         this.setState({
             toastVisible: !this.state.toastVisible
-        })
+        });
     }
 
     render() {
@@ -82,7 +77,7 @@ export default class App extends Component {
         } = this.state;
 
         return (
-            <div>
+            <React.Fragment>
                 <div className='toast-container'>
                     <Toast 
                         style={{display : toastVisible ? 'block' : 'none' }}
@@ -95,6 +90,7 @@ export default class App extends Component {
                     </Toast>
                 </div>
                 <div className='container'>
+                    <h1>Password Generator</h1>
                     <PasswordGenerator 
                     passwordLength={passwordLength} 
                     includeSpecialCharacters={includeSpecialCharacters}
@@ -104,8 +100,7 @@ export default class App extends Component {
                     onInputChange={this.handleInputChange}
                     onClipboardClick={this.handleClipboard} />
                 </div>
-            </div>
-            
+            </React.Fragment>
         )
     }
 }
